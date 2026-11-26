@@ -1,0 +1,38 @@
+base: p5_encoder.yaml
+run:
+  phase: p6_baseline
+  name: run
+  policy: max_entropy      # oracle | random | abs_greedy | max_entropy | eig_threshold | dqn
+  sim_mode: multi          # single | multi
+  split: val               # val = window 6; test = window 7 (P10 only)
+  n_eval: 2000             # fixed random sample of evaluation sessions (same for every method)
+  n_proc: 12
+  rec_threshold: 50
+  train_episodes: 10000
+  eval_every: 1000
+  n_es: 150
+env:                       # UNICORN baseline (DESIGN 1.2): binary questions, intersection filter, weighted entropy
+  T: 15
+  K: 10
+  Kv: 10
+  Kq: 10
+  question_types: [binary]
+  filter_mode: intersection
+  q_score: wentropy
+  location_mode: hard_state
+  init_attr: false        # DESIGN 9.3: session starts from the profile (UNICORN-original protocol = true, see reports/p6_baseline/init_attr)
+  reward_mode: unicorn
+sim:
+  tau: 0.5
+  eps: 0.0
+  p_unknown_skill: 0.0
+policy:
+  hidden: 100
+  emb_dim: 64
+  graph_layer: gcn
+  gamma: 0.999
+  lr: 0.0001
+  batch: 64
+  tau_soft: 0.01
+  n_max: 48               # binary questions: <= 1 + 15 + 10 + 10 nodes
+  a_max: 20

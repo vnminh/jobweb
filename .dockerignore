@@ -1,0 +1,8 @@
+**/node_modules
+**/__pycache__
+**/*.pyc
+frontend/dist
+backend/data
+jobunicorn/data/**
+!jobunicorn/data/processed/fit/g_phi.pkl
+.git

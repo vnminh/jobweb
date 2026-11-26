@@ -1,0 +1,47 @@
+# JobWeb: docker compose up -d   ->  http://localhost:8080
+# Images are on Docker Hub (linux/amd64 + linux/arm64); `docker compose build` rebuilds them from this repository.
+name: jobweb
+
+services:
+  db:
+    image: leevox/jobweb-db:latest
+    build: { context: ., dockerfile: docker/db.Dockerfile }
+    environment:
+      POSTGRES_USER: jobweb
+      POSTGRES_PASSWORD: jobweb
+      POSTGRES_DB: jobweb
+    volumes:
+      - pgdata:/var/lib/postgresql/pgdata   # first start copies the preloaded database from the image
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U jobweb -d jobweb"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    restart: unless-stopped
+
+  backend:
+    image: leevox/jobweb-backend:latest
+    build: { context: ., dockerfile: docker/backend.Dockerfile }
+    environment:
+      DATABASE_URL: postgresql+psycopg://jobweb:jobweb@db:5432/jobweb
+      JOBWEB_SECRET: ${JOBWEB_SECRET:-change-me-in-production}
+      JOBWEB_ENGINE: ${JOBWEB_ENGINE:-1}
+    depends_on:
+      db: { condition: service_healthy }
+    volumes:
+      - cache:/app/cache
+    ports:
+      - "${API_PORT:-8000}:8000"
+    restart: unless-stopped
+
+  frontend:
+    image: leevox/jobweb-frontend:latest
+    build: { context: ., dockerfile: docker/frontend.Dockerfile }
+    depends_on: [backend]
+    ports:
+      - "${WEB_PORT:-8080}:80"
+    restart: unless-stopped
+
+volumes:
+  pgdata:
+  cache:

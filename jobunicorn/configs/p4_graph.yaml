@@ -1,0 +1,10 @@
+base: p3_attributes.yaml
+graph:
+  occ_min_score: 0.40          # is_occupation edge only when JobBERT cosine >= this (weight = score)
+  major_min_users: 50          # major nodes: cleaned majors with >= 50 TRAIN-window users
+  transition_min_count: 5
+  transition_alpha: 1.0
+  near_radius_km: 50
+  near_scale_km: 25
+dev:
+  window: 5

@@ -1,0 +1,193 @@
+- config: configs/p7/choice.yaml
+  out: reports/p7_actions/choice_dqn
+  overrides:
+  - run.policy=dqn
+  - run.sim_mode=multi
+- config: configs/p7/hier.yaml
+  out: reports/p7_actions/hier_dqn
+  overrides:
+  - run.policy=dqn
+  - run.sim_mode=multi
+- config: configs/p7/range.yaml
+  out: reports/p7_actions/range_dqn
+  overrides:
+  - run.policy=dqn
+  - run.sim_mode=multi
+- config: configs/p7/full.yaml
+  out: reports/p7_actions/full_dqn
+  overrides:
+  - run.policy=dqn
+  - run.sim_mode=multi
+  - retrieval.n_c=2000
+- config: configs/p7/full.yaml
+  out: reports/p7_actions/full_eigthr
+  overrides:
+  - run.policy=eig_threshold
+  - run.sim_mode=multi
+  - retrieval.n_c=2000
+- config: configs/final.yaml
+  out: reports/p7_actions/full_fit_dqn
+  overrides:
+  - run.split=val
+  - run.allow_test=false
+  - run.n_eval=2000
+  - run.phase=p7_actions
+- config: configs/final.yaml
+  out: reports/p7_actions/full_fit_eigthr
+  overrides:
+  - run.split=val
+  - run.allow_test=false
+  - run.n_eval=2000
+  - run.phase=p7_actions
+  - run.policy=eig_threshold
+- cmd: python scripts/p9_retrieval.py --config configs/p9_retrieval.yaml --data-root
+    /vol/data --out /vol/reports/p9_retrieval run.n_proc=5
+  out: reports/p9_retrieval
+  done: results.json
+  gpu: false
+- config: configs/final.yaml
+  out: reports/p10_final/jobunicorn/seed0
+  overrides:
+  - seed=0
+- config: configs/final.yaml
+  out: reports/p10_final/jobunicorn/seed1
+  overrides:
+  - seed=1
+- config: configs/final.yaml
+  out: reports/p10_final/jobunicorn/seed2
+  overrides:
+  - seed=2
+- config: configs/p6_conv.yaml
+  out: reports/p10_final/unicorn_p7sim/seed0
+  overrides:
+  - run.split=test
+  - run.allow_test=true
+  - run.n_eval=3000
+  - run.phase=p10_final
+  - run.policy=dqn
+  - run.sim_mode=multi
+  - sim.p_unknown_skill=0.5
+  - seed=0
+- config: configs/p6_conv.yaml
+  out: reports/p10_final/unicorn_p7sim/seed1
+  overrides:
+  - run.split=test
+  - run.allow_test=true
+  - run.n_eval=3000
+  - run.phase=p10_final
+  - run.policy=dqn
+  - run.sim_mode=multi
+  - sim.p_unknown_skill=0.5
+  - seed=1
+- config: configs/p6_conv.yaml
+  out: reports/p10_final/unicorn_p7sim/seed2
+  overrides:
+  - run.split=test
+  - run.allow_test=true
+  - run.n_eval=3000
+  - run.phase=p10_final
+  - run.policy=dqn
+  - run.sim_mode=multi
+  - sim.p_unknown_skill=0.5
+  - seed=2
+- config: configs/final.yaml
+  out: reports/p10_final/rules_jobunicorn/eig_threshold
+  overrides:
+  - run.policy=eig_threshold
+- config: configs/final.yaml
+  out: reports/p10_final/rules_jobunicorn/abs_greedy
+  overrides:
+  - run.policy=abs_greedy
+- config: configs/final.yaml
+  out: reports/p10_final/rules_jobunicorn/max_entropy
+  overrides:
+  - run.policy=max_entropy
+- config: configs/final.yaml
+  out: reports/p10_final/rules_jobunicorn/random
+  overrides:
+  - run.policy=random
+- config: configs/final.yaml
+  out: reports/p10_final/rules_jobunicorn/oracle
+  overrides:
+  - run.policy=oracle
+- config: configs/p6_conv.yaml
+  out: reports/p10_final/rules_unicorn_p7sim/eig_threshold
+  overrides:
+  - run.split=test
+  - run.allow_test=true
+  - run.n_eval=3000
+  - run.phase=p10_final
+  - run.policy=eig_threshold
+  - run.sim_mode=multi
+  - sim.p_unknown_skill=0.5
+- config: configs/p6_conv.yaml
+  out: reports/p10_final/rules_unicorn_p7sim/abs_greedy
+  overrides:
+  - run.split=test
+  - run.allow_test=true
+  - run.n_eval=3000
+  - run.phase=p10_final
+  - run.policy=abs_greedy
+  - run.sim_mode=multi
+  - sim.p_unknown_skill=0.5
+- config: configs/p6_conv.yaml
+  out: reports/p10_final/rules_unicorn_p7sim/max_entropy
+  overrides:
+  - run.split=test
+  - run.allow_test=true
+  - run.n_eval=3000
+  - run.phase=p10_final
+  - run.policy=max_entropy
+  - run.sim_mode=multi
+  - sim.p_unknown_skill=0.5
+- config: configs/p6_conv.yaml
+  out: reports/p10_final/rules_unicorn_p7sim/random
+  overrides:
+  - run.split=test
+  - run.allow_test=true
+  - run.n_eval=3000
+  - run.phase=p10_final
+  - run.policy=random
+  - run.sim_mode=multi
+  - sim.p_unknown_skill=0.5
+- config: configs/p6_conv.yaml
+  out: reports/p10_final/rules_unicorn_p7sim/oracle
+  overrides:
+  - run.split=test
+  - run.allow_test=true
+  - run.n_eval=3000
+  - run.phase=p10_final
+  - run.policy=oracle
+  - run.sim_mode=multi
+  - sim.p_unknown_skill=0.5
+- config: configs/final.yaml
+  out: reports/p10_final/ablation/no_profile
+  overrides:
+  - policy.use_profile=false
+- config: configs/final.yaml
+  out: reports/p10_final/ablation/no_fit
+  overrides:
+  - env.lambda_fit=0.0
+  - env.beta_fit=0.0
+- config: configs/final.yaml
+  out: reports/p10_final/ablation/no_choice
+  overrides:
+  - env.question_types=[binary,hier,range,confirm]
+- config: configs/final.yaml
+  out: reports/p10_final/ablation/no_hier
+  overrides:
+  - env.question_types=[binary,choice,range,confirm]
+- config: configs/final.yaml
+  out: reports/p10_final/ablation/wentropy
+  overrides:
+  - env.q_score=wentropy
+- config: configs/final.yaml
+  out: reports/p10_final/ablation/all_soft
+  overrides:
+  - env.hard_types=[]
+- cmd: python scripts/p10_text_embeddings.py --config configs/p5_encoder.yaml --data-root
+    /vol/data && python scripts/conv_run.py --config configs/final.yaml --data-root
+    /vol/data --out /vol/reports/p10_final/ablation/text_only world.emb_prefix=node_emb_text
+    policy.emb_dim=384
+  out: reports/p10_final/ablation/text_only
+  gpu: true

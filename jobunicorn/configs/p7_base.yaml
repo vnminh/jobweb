@@ -1,0 +1,24 @@
+# JobUNICORN core (DESIGN 7): soft/hard constraints with union-within-type, EIG, 'whatever' set, extended rewards,
+# R-GCN policy graph with profile + rejected attributes in the sequence and question-type embeddings.
+base: p6_conv.yaml
+run:
+  phase: p7_actions
+env:
+  question_types: [binary]
+  filter_mode: soft
+  q_score: eig
+  use_whatever_set: true
+  reward_mode: extended
+  choice_m: 4
+  location_mode: hard_state
+sim:
+  tau: 0.5
+  eps: 0.0
+  p_unknown_skill: 0.5      # DESIGN 9.3 realism: unknown skills (not related to past occupations) -> 'whatever' w.p. 0.5
+policy:
+  graph_layer: rgcn
+  use_profile: true
+  use_rejected: true
+  use_qtype_emb: true
+  n_max: 96               # choice questions add up to 4 member nodes each
+  a_max: 24

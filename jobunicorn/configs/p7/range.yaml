@@ -1,0 +1,6 @@
+base: ../p7_base.yaml
+run:
+  name: range
+env:
+  question_types: [binary, choice, hier, range]
+  location_mode: hard_state

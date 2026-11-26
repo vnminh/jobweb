@@ -1,0 +1,21 @@
+# P10 final JobUNICORN (DESIGN 10). Fixed BEFORE looking at window 7:
+#   full action space (binary/choice/hier/range + location confirm), two-stage retrieval N_c=2000 (P9 design value),
+#   fit term lambda=0.25 (selected on held-out users of windows 1-5 in P8), beta=0.1 penalty for unqualified recs.
+#   Window-6 check of the fit term: reports/p7_actions/full_fit_dqn (val) vs full_dqn.
+base: p7/full.yaml
+run:
+  phase: p10_final
+  name: jobunicorn
+  policy: dqn
+  sim_mode: multi
+  split: test
+  allow_test: true
+  n_eval: 3000
+env:
+  lambda_fit: 0.25
+  beta_fit: 0.1
+retrieval:
+  n_c: 2000
+fit_model:
+  model: g_phi
+  text_tag: txt

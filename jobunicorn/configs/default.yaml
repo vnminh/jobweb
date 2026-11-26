@@ -1,0 +1,19 @@
+# Default config shared by every script. Experiment configs use `base: default.yaml`.
+seed: 0
+paths:
+  data_root: data          # relative to repo root, or absolute (Modal: /vol/data)
+  out: null
+data:
+  raw_files:
+    users: users.tsv
+    apps: apps.tsv
+    user_history: user_history.tsv
+    jobs: jobs.tsv
+    window_dates: window_dates.tsv
+    test_users: test_users.tsv
+    popular_jobs: popular_jobs.csv
+split:
+  train_windows: [1, 2, 3, 4, 5]
+  val_window: 6
+  test_window: 7
+  early_stop_user_frac: 0.10

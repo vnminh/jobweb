@@ -2,7 +2,7 @@ import json
 
 from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
-from sqlalchemy import func, or_
+from sqlalchemy import case, func, or_
 from sqlalchemy.orm import Session, joinedload
 
 from ..auth import require
@@ -37,11 +37,11 @@ def stats(db: Session = Depends(get_db), _=ADMIN):
     top_groups = [{"key": k, "name": GROUP_VI.get(k or "", gname.get(k, "Khác")), "jobs": n} for k, n in
                   db.query(Job.occ_group, func.count(Job.id)).filter(Job.status == "open").group_by(Job.occ_group).order_by(func.count(Job.id).desc()).limit(10)]
     top_states = [{"state": state_name(s), "jobs": n} for s, n in db.query(Job.state, func.count(Job.id)).group_by(Job.state).order_by(func.count(Job.id).desc()).limit(10)]
-    per_day = [{"day": d, "n": n} for d, n in db.query(func.date(Application.application_date), func.count(Application.id))
+    per_day = [{"day": str(d), "n": n} for d, n in db.query(func.date(Application.application_date), func.count(Application.id))
                .filter(Application.source == "dataset").group_by(func.date(Application.application_date)).order_by(func.date(Application.application_date))]
     degrees = [{"degree": DEGREE_VI[int(d or 0)] if (d or 0) > 0 else "Chưa có bằng cấp", "n": n} for d, n in db.query(SeekerProfile.degree_ord, func.count(SeekerProfile.id))
                .group_by(SeekerProfile.degree_ord).order_by(func.count(SeekerProfile.id).desc())]
-    conv = db.query(func.count(Conversation.id), func.avg(Conversation.turns), func.sum(Conversation.success), func.avg(Conversation.n_questions)).filter(Conversation.turns > 0).one()
+    conv = db.query(func.count(Conversation.id), func.avg(Conversation.turns), func.sum(case((Conversation.success, 1), else_=0)), func.avg(Conversation.n_questions)).filter(Conversation.turns > 0).one()
     e = get_engine()
     return {"accounts": roles, "jobs_status": jobs_status, "jobs_source": jobs_source, "apps_status": apps_status, "apps_source": apps_source,
             "top_groups": top_groups, "top_states": top_states, "apps_per_day": per_day, "degrees": degrees,

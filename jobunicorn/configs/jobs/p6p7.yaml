@@ -1,0 +1,76 @@
+- config: configs/p6_conv.yaml
+  out: reports/p6_baseline/main/unicorn_single
+  overrides:
+  - run.policy=dqn
+  - run.sim_mode=single
+- config: configs/p6_conv.yaml
+  out: reports/p6_baseline/main/unicorn_multi
+  overrides:
+  - run.policy=dqn
+  - run.sim_mode=multi
+- config: configs/p6_conv.yaml
+  out: reports/p7_actions/unicorn_binary_dqn
+  overrides:
+  - run.policy=dqn
+  - run.sim_mode=multi
+  - sim.p_unknown_skill=0.5
+  - run.phase=p7_actions
+- config: configs/p6_conv.yaml
+  out: reports/p7_actions/unicorn_binary_eigthr
+  overrides:
+  - run.policy=eig_threshold
+  - run.sim_mode=multi
+  - sim.p_unknown_skill=0.5
+  - run.phase=p7_actions
+- config: configs/p7/binary.yaml
+  out: reports/p7_actions/binary_dqn
+  overrides:
+  - run.policy=dqn
+  - run.sim_mode=multi
+- config: configs/p7/binary.yaml
+  out: reports/p7_actions/binary_eigthr
+  overrides:
+  - run.policy=eig_threshold
+  - run.sim_mode=multi
+- config: configs/p7/choice.yaml
+  out: reports/p7_actions/choice_dqn
+  overrides:
+  - run.policy=dqn
+  - run.sim_mode=multi
+- config: configs/p7/choice.yaml
+  out: reports/p7_actions/choice_eigthr
+  overrides:
+  - run.policy=eig_threshold
+  - run.sim_mode=multi
+- config: configs/p7/hier.yaml
+  out: reports/p7_actions/hier_dqn
+  overrides:
+  - run.policy=dqn
+  - run.sim_mode=multi
+- config: configs/p7/hier.yaml
+  out: reports/p7_actions/hier_eigthr
+  overrides:
+  - run.policy=eig_threshold
+  - run.sim_mode=multi
+- config: configs/p7/range.yaml
+  out: reports/p7_actions/range_dqn
+  overrides:
+  - run.policy=dqn
+  - run.sim_mode=multi
+- config: configs/p7/range.yaml
+  out: reports/p7_actions/range_eigthr
+  overrides:
+  - run.policy=eig_threshold
+  - run.sim_mode=multi
+- config: configs/p7/full.yaml
+  out: reports/p7_actions/full_dqn
+  overrides:
+  - run.policy=dqn
+  - run.sim_mode=multi
+  - retrieval.n_c=2000
+- config: configs/p7/full.yaml
+  out: reports/p7_actions/full_eigthr
+  overrides:
+  - run.policy=eig_threshold
+  - run.sim_mode=multi
+  - retrieval.n_c=2000

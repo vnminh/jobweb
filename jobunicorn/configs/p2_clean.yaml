@@ -1,0 +1,13 @@
+base: default.yaml
+clean:
+  n_proc: 12
+  chunk: 5000
+  geonames: external/geonames/US.txt   # relative to data_root
+  sample_check: 10000                  # jobs sampled for the 0-HTML-tag check
+sessions:
+  definition: A_cut5        # Gate A decision (DESIGN 2.3)
+  cut_days: 5
+  es_holdout_frac: 0.10     # 10% of train-window users held out for early stopping
+dev:
+  min_sessions: 3000
+  top_states: 10

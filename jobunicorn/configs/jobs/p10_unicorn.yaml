@@ -1,0 +1,139 @@
+- config: configs/p6_conv.yaml
+  out: reports/p10_final/unicorn_paper_protocol/seed0
+  overrides:
+  - run.split=test
+  - run.allow_test=true
+  - run.n_eval=3000
+  - run.phase=p10_final
+  - run.policy=dqn
+  - run.sim_mode=single
+  - env.init_attr=true
+  - seed=0
+- config: configs/p6_conv.yaml
+  out: reports/p10_final/unicorn_fair/seed0
+  overrides:
+  - run.split=test
+  - run.allow_test=true
+  - run.n_eval=3000
+  - run.phase=p10_final
+  - run.policy=dqn
+  - run.sim_mode=multi
+  - seed=0
+- config: configs/p6_conv.yaml
+  out: reports/p10_final/unicorn_paper_protocol/seed1
+  overrides:
+  - run.split=test
+  - run.allow_test=true
+  - run.n_eval=3000
+  - run.phase=p10_final
+  - run.policy=dqn
+  - run.sim_mode=single
+  - env.init_attr=true
+  - seed=1
+- config: configs/p6_conv.yaml
+  out: reports/p10_final/unicorn_fair/seed1
+  overrides:
+  - run.split=test
+  - run.allow_test=true
+  - run.n_eval=3000
+  - run.phase=p10_final
+  - run.policy=dqn
+  - run.sim_mode=multi
+  - seed=1
+- config: configs/p6_conv.yaml
+  out: reports/p10_final/unicorn_paper_protocol/seed2
+  overrides:
+  - run.split=test
+  - run.allow_test=true
+  - run.n_eval=3000
+  - run.phase=p10_final
+  - run.policy=dqn
+  - run.sim_mode=single
+  - env.init_attr=true
+  - seed=2
+- config: configs/p6_conv.yaml
+  out: reports/p10_final/unicorn_fair/seed2
+  overrides:
+  - run.split=test
+  - run.allow_test=true
+  - run.n_eval=3000
+  - run.phase=p10_final
+  - run.policy=dqn
+  - run.sim_mode=multi
+  - seed=2
+- config: configs/p6_conv.yaml
+  out: reports/p10_final/rules_unicorn_env/abs_greedy_multi
+  overrides:
+  - run.split=test
+  - run.allow_test=true
+  - run.n_eval=3000
+  - run.phase=p10_final
+  - run.policy=abs_greedy
+  - run.sim_mode=multi
+- config: configs/p6_conv.yaml
+  out: reports/p10_final/rules_paper_protocol/abs_greedy_single
+  overrides:
+  - run.split=test
+  - run.allow_test=true
+  - run.n_eval=3000
+  - run.phase=p10_final
+  - run.policy=abs_greedy
+  - run.sim_mode=single
+  - env.init_attr=true
+- config: configs/p6_conv.yaml
+  out: reports/p10_final/rules_unicorn_env/max_entropy_multi
+  overrides:
+  - run.split=test
+  - run.allow_test=true
+  - run.n_eval=3000
+  - run.phase=p10_final
+  - run.policy=max_entropy
+  - run.sim_mode=multi
+- config: configs/p6_conv.yaml
+  out: reports/p10_final/rules_paper_protocol/max_entropy_single
+  overrides:
+  - run.split=test
+  - run.allow_test=true
+  - run.n_eval=3000
+  - run.phase=p10_final
+  - run.policy=max_entropy
+  - run.sim_mode=single
+  - env.init_attr=true
+- config: configs/p6_conv.yaml
+  out: reports/p10_final/rules_unicorn_env/random_multi
+  overrides:
+  - run.split=test
+  - run.allow_test=true
+  - run.n_eval=3000
+  - run.phase=p10_final
+  - run.policy=random
+  - run.sim_mode=multi
+- config: configs/p6_conv.yaml
+  out: reports/p10_final/rules_paper_protocol/random_single
+  overrides:
+  - run.split=test
+  - run.allow_test=true
+  - run.n_eval=3000
+  - run.phase=p10_final
+  - run.policy=random
+  - run.sim_mode=single
+  - env.init_attr=true
+- config: configs/p6_conv.yaml
+  out: reports/p10_final/rules_unicorn_env/oracle_multi
+  overrides:
+  - run.split=test
+  - run.allow_test=true
+  - run.n_eval=3000
+  - run.phase=p10_final
+  - run.policy=oracle
+  - run.sim_mode=multi
+- config: configs/p6_conv.yaml
+  out: reports/p10_final/rules_paper_protocol/oracle_single
+  overrides:
+  - run.split=test
+  - run.allow_test=true
+  - run.n_eval=3000
+  - run.phase=p10_final
+  - run.policy=oracle
+  - run.sim_mode=single
+  - env.init_attr=true

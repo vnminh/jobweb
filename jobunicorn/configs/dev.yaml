@@ -1,0 +1,19 @@
+base: default.yaml
+dev:
+  description: 'Tập dev: 1 window train + 2-3 bang, định nghĩa phiên A_cut5. Chỉ để
+    phát triển nhanh, không báo cáo.'
+  window: 5
+  states:
+  - CA
+  - FL
+  - TX
+  filters:
+    users: users.window == window and users.state in states
+    jobs: jobs.window == window and jobs.state in states (canonical jobs)
+    apps: user in dev users and canonical job in dev jobs
+  counts_at_definition:
+    users: 14775
+    canonical_jobs: 33868
+    usable_sessions: 2637
+  session_def: A_cut5
+  source: scripts/p2_clean.py (reports/p2_clean/dev_candidates.csv)

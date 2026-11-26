@@ -1,0 +1,19 @@
+base: default.yaml
+attributes:
+  onet_dir: external/onet/db_30_1_text     # relative to data_root
+  device: cpu
+  title_encoder_candidates:
+    - sentence-transformers/all-MiniLM-L6-v2
+    - TechWolf/JobBERT-v2
+  holdout_n: 3000
+  title_encoder: TechWolf/JobBERT-v2   # chosen by scripts/p3_encoder_check.py (reports/p3_attributes/encoder_check.json)
+  occ_confident_threshold: 0.60   # cosine (JobBERT); below -> "không chắc" (kept, flagged)
+  skill_min_df: 20                 # DESIGN 4.3 (train windows, canonical jobs)
+  skill_max_frac: 0.30
+  skill_blacklist_names: []        # filled after audit rounds
+  history_decay: 0.7               # weight 0.7^(seq-1); seq=1 is the most recent job (checked in P3)
+  n_proc: 12
+  audit_n: 200
+  occupation_source: rerank        # P3 round 2 (description-aware re-rank); "title" = round 1
+  rerank_lambda: 0.5               # chosen by scripts/p3_tune_rerank.py (reports/p3_attributes/rerank_tuning.json)
+  rerank_lambda_grid: [0.25, 0.5, 1.0, 1.5]

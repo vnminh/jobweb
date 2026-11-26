@@ -1,0 +1,106 @@
+{
+  "n": 2000,
+  "SR@5": 0.5835,
+  "SR@5_ci": [
+    0.5614875,
+    0.6050125
+  ],
+  "SR@10": 0.804,
+  "SR@10_ci": [
+    0.7845,
+    0.8215125
+  ],
+  "SR@15": 0.898,
+  "SR@15_ci": [
+    0.8844875,
+    0.911
+  ],
+  "AT": 5.862,
+  "AT_ci": [
+    5.672475,
+    6.069
+  ],
+  "hDCG": 0.4409756248975096,
+  "effort": 8.598,
+  "n_questions": 2.748,
+  "unqualified_rate": 0.14898053224553223,
+  "catalog_coverage": 0.2637280301867716,
+  "reachable_rate": 1.0,
+  "SR@15_given_reachable": 0.898,
+  "action_mix": {
+    "rec": 0.5312,
+    "choice": 0.27,
+    "binary": 0.1112,
+    "confirm": 0.0354,
+    "range": 0.0328,
+    "hier": 0.0194
+  },
+  "policy": "dqn",
+  "sim_mode": "multi",
+  "split": "val",
+  "score_temp": 4.6103057861328125,
+  "env": {
+    "T": 15,
+    "K": 10,
+    "Kv": 10,
+    "Kq": 10,
+    "question_types": [
+      "binary",
+      "choice",
+      "hier",
+      "range",
+      "confirm"
+    ],
+    "binary_types": [
+      "occ_group",
+      "occupation",
+      "skill",
+      "seniority",
+      "job_type",
+      "city"
+    ],
+    "choice_types": [
+      "occupation",
+      "skill",
+      "seniority",
+      "job_type",
+      "city"
+    ],
+    "choice_m": 4,
+    "filter_mode": "soft",
+    "hard_types": [
+      "job_type",
+      "city",
+      "state"
+    ],
+    "hard_keep_unknown": true,
+    "q_score": "eig",
+    "location_mode": "confirm",
+    "loc_bonus": 1.7,
+    "init_attr": false,
+    "init_types": [
+      "occupation",
+      "skill"
+    ],
+    "reward_mode": "extended",
+    "rewards": {},
+    "lambda_fit": 0.25,
+    "beta_fit": 0.1,
+    "range_penalty": 0.5,
+    "reject_list_penalty": 0.1,
+    "score_temp": 4.6103057861328125,
+    "use_whatever_set": true,
+    "belief": "softmax",
+    "belief_temp": 1.758,
+    "exclude_history": true,
+    "turn_penalty": 0.08,
+    "seed": 0
+  },
+  "sim": {
+    "tau": 0.5,
+    "eps": 0.0,
+    "p_unknown_skill": 0.5,
+    "seed": 0
+  },
+  "runtime_sec": 23442.91610765457
+}

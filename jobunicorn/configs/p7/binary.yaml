@@ -1,0 +1,6 @@
+base: ../p7_base.yaml
+run:
+  name: binary
+env:
+  question_types: [binary]
+  location_mode: hard_state

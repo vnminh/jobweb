@@ -1,0 +1,39 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "jobunicorn"
+version = "0.0.1"
+description = "Graph-based unified conversational job recommendation (UNICORN extension) on CareerBuilder 2012"
+requires-python = ">=3.10"
+# Core (light) dependencies: enough for data processing, EDA, tests and launching Modal jobs.
+dependencies = [
+    "numpy==2.2.6",
+    "pandas==3.1.0",
+    "pyarrow==26.0.0",
+    "scikit-learn==1.9.1",
+    "pyyaml==6.0.2",
+    "tqdm==4.67.1",
+    "beautifulsoup4==4.12.3",
+    "lxml==5.3.0",
+    "matplotlib==3.9.4",
+]
+
+[project.optional-dependencies]
+# Heavy ML stack. Installed in the Modal image (modal_app.py); install locally only if needed.
+ml = [
+    "torch==2.5.1",
+    "torch_geometric==2.6.1",
+    "sentence-transformers==3.3.1",
+    "faiss-cpu==1.9.0",
+]
+dev = ["pytest==8.3.4"]
+cloud = ["modal==1.6.3"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"

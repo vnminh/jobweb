@@ -1,0 +1,21 @@
+# Post-hoc, one-shot test (window 7) evaluation of the post-P10 fixes. Test was already seen in P10;
+# R3 was chosen on val among R0-R3 and rule thresholds on val. Same 3,000-session sample as reports/p10_final.
+- config: configs/final.yaml
+  out: reports/post_p10_test/dqn_R3
+  overrides: [run.split=test, run.allow_test=true, run.n_eval=3000, run.phase=post_p10_test, seed=0,
+              env.belief=softmax, env.belief_temp=1.758, env.exclude_history=true, policy.use_state_feats=true,
+              policy.rec_order=w, env.turn_penalty=0.08, run.load_policy=reports/post_p10_dqn/R3_belief_feats_pen08/policy.pt]
+- config: configs/final.yaml
+  out: reports/post_p10_test/abs_greedy_nohist
+  overrides: [run.split=test, run.allow_test=true, run.n_eval=3000, run.phase=post_p10_test, env.exclude_history=true, run.policy=abs_greedy]
+- config: configs/final.yaml
+  out: reports/post_p10_test/oracle_nohist
+  overrides: [run.split=test, run.allow_test=true, run.n_eval=3000, run.phase=post_p10_test, env.exclude_history=true, run.policy=oracle]
+- config: configs/final.yaml
+  out: reports/post_p10_test/eig_thr0.1_softmax_nohist
+  overrides: [run.split=test, run.allow_test=true, run.n_eval=3000, run.phase=post_p10_test, env.belief=softmax, env.belief_temp=1.758,
+              env.exclude_history=true, run.policy=eig_threshold, run.mass_threshold=0.1, run.ask_budget=4]
+- config: configs/final.yaml
+  out: reports/post_p10_test/eig_thr0.3_softmax_nohist
+  overrides: [run.split=test, run.allow_test=true, run.n_eval=3000, run.phase=post_p10_test, env.belief=softmax, env.belief_temp=1.758,
+              env.exclude_history=true, run.policy=eig_threshold, run.mass_threshold=0.3, run.ask_budget=4]

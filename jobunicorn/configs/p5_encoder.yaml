@@ -1,0 +1,27 @@
+base: p4_graph.yaml
+encoder:
+  text_encoder_candidates:
+    - sentence-transformers/all-MiniLM-L6-v2
+    - BAAI/bge-small-en-v1.5
+  tag: txt                # file tag of the chosen text encoder embeddings
+  max_seq_length: 256
+  desc_chars: 1200
+  req_chars: 500
+  dim: 64                 # DESIGN 6.4 (as UNICORN)
+  hidden: 64
+  layers: 2
+  dropout: 0.1
+  lr: 0.002
+  weight_decay: 0.00001
+  batch: 8192
+  steps: 5000
+  eval_every: 50
+  patience: 10
+  aux_weight: 0.2               # run 1 used 0.5 (R@50 0.199 vs 0.254 without aux; see reports/p5_encoder)
+  es_max_users: 3000
+  tt_hidden: 128
+  tt_steps: 3000
+  conversation_encoder: d_gnn_aux   # embeddings used by the conversation (e_v.e_p must be meaningful)
+dev:
+  window: 5
+  states: [CA, FL, TX]

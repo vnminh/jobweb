@@ -1,19 +1,21 @@
 from sqlalchemy import create_engine, event
 from sqlalchemy.orm import declarative_base, sessionmaker
 
-from .config import DB_PATH
+from .config import CACHE_DIR, DATABASE_URL
 
-DB_PATH.parent.mkdir(parents=True, exist_ok=True)
-engine = create_engine(f"sqlite:///{DB_PATH}", connect_args={"check_same_thread": False})
+CACHE_DIR.mkdir(parents=True, exist_ok=True)
+IS_SQLITE = DATABASE_URL.startswith("sqlite")
+if IS_SQLITE:
+    engine = create_engine(DATABASE_URL, connect_args={"check_same_thread": False})
 
-
-@event.listens_for(engine, "connect")
-def _pragmas(conn, _):
-    cur = conn.cursor()
-    cur.execute("PRAGMA journal_mode=WAL")
-    cur.execute("PRAGMA foreign_keys=ON")
-    cur.close()
-
+    @event.listens_for(engine, "connect")
+    def _pragmas(conn, _):
+        cur = conn.cursor()
+        cur.execute("PRAGMA journal_mode=WAL")
+        cur.execute("PRAGMA foreign_keys=ON")
+        cur.close()
+else:
+    engine = create_engine(DATABASE_URL, pool_pre_ping=True, pool_size=10, max_overflow=20)
 
 SessionLocal = sessionmaker(bind=engine, autoflush=False, expire_on_commit=False)
 Base = declarative_base()

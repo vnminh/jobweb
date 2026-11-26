@@ -6,3 +6,8 @@ __pycache__/
 backend/data/*.npz
 *.pyc
 .env
+docker/assets/
+# recommender data comes from the backend image (see README); only the fit-model checkpoint is versioned
+jobunicorn/data/**
+!jobunicorn/data/**/
+!jobunicorn/data/processed/fit/g_phi.pkl

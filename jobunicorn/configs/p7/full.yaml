@@ -1,0 +1,6 @@
+base: ../p7_base.yaml
+run:
+  name: full
+env:
+  question_types: [binary, choice, hier, range, confirm]
+  location_mode: confirm

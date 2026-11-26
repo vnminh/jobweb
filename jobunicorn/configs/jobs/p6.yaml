@@ -1,0 +1,50 @@
+- config: configs/p6_conv.yaml
+  out: reports/p6_baseline/oracle_single
+  overrides:
+  - run.policy=oracle
+  - run.sim_mode=single
+- config: configs/p6_conv.yaml
+  out: reports/p6_baseline/random_single
+  overrides:
+  - run.policy=random
+  - run.sim_mode=single
+- config: configs/p6_conv.yaml
+  out: reports/p6_baseline/abs_greedy_single
+  overrides:
+  - run.policy=abs_greedy
+  - run.sim_mode=single
+- config: configs/p6_conv.yaml
+  out: reports/p6_baseline/max_entropy_single
+  overrides:
+  - run.policy=max_entropy
+  - run.sim_mode=single
+- config: configs/p6_conv.yaml
+  out: reports/p6_baseline/unicorn_single
+  overrides:
+  - run.policy=dqn
+  - run.sim_mode=single
+- config: configs/p6_conv.yaml
+  out: reports/p6_baseline/oracle_multi
+  overrides:
+  - run.policy=oracle
+  - run.sim_mode=multi
+- config: configs/p6_conv.yaml
+  out: reports/p6_baseline/random_multi
+  overrides:
+  - run.policy=random
+  - run.sim_mode=multi
+- config: configs/p6_conv.yaml
+  out: reports/p6_baseline/abs_greedy_multi
+  overrides:
+  - run.policy=abs_greedy
+  - run.sim_mode=multi
+- config: configs/p6_conv.yaml
+  out: reports/p6_baseline/max_entropy_multi
+  overrides:
+  - run.policy=max_entropy
+  - run.sim_mode=multi
+- config: configs/p6_conv.yaml
+  out: reports/p6_baseline/unicorn_multi
+  overrides:
+  - run.policy=dqn
+  - run.sim_mode=multi

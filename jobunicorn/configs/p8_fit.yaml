@@ -1,0 +1,11 @@
+base: p6_conv.yaml
+fit_train:
+  n_neg: 4
+  max_train_users: 20000
+  max_val_users: 6500
+  lambda_grid: [0.0, 0.25, 0.5, 1.0, 2.0]
+  rerank_top: 500
+  rerank_users: 2000
+fit_model:
+  model: g_phi
+  text_tag: txt

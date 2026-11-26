@@ -153,10 +153,10 @@ class Engine:
             for idx, key in zip(n["idx"], n["key"]):
                 self.attr_key[(t, str(key))] = int(idx) + W.offset[t]
         # trained P5 encoder for entities created on the web (see encoder.py)
-        from ..config import DB_PATH
+        from ..config import CACHE_DIR
         from .encoder import GraphEncoder
 
-        self.enc = GraphEncoder(DATA_ROOT, REPO / "reports/p5_encoder/d_gnn_aux.pt", DEMO_WINDOW, DB_PATH.parent)
+        self.enc = GraphEncoder(DATA_ROOT, REPO / "reports/p5_encoder/d_gnn_aux.pt", DEMO_WINDOW, CACHE_DIR)
         self.web_jobs: dict[int, dict] = {}  # world idx -> spec (title, text, attributes)
         self.web_users: dict[int, dict] = {}  # world idx -> profile spec
         self.scratch = list(range(self.nU0 + EXTRA_USERS - 20, self.nU0 + EXTRA_USERS))  # rows for test personas

@@ -1,0 +1,6 @@
+base: ../p7_base.yaml
+run:
+  name: choice
+env:
+  question_types: [binary, choice]
+  location_mode: hard_state

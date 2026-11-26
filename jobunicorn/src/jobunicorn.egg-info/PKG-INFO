@@ -1,0 +1,23 @@
+Metadata-Version: 2.4
+Name: jobunicorn
+Version: 0.0.1
+Summary: Graph-based unified conversational job recommendation (UNICORN extension) on CareerBuilder 2012
+Requires-Python: >=3.10
+Requires-Dist: numpy==2.2.6
+Requires-Dist: pandas==3.1.0
+Requires-Dist: pyarrow==26.0.0
+Requires-Dist: scikit-learn==1.9.1
+Requires-Dist: pyyaml==6.0.2
+Requires-Dist: tqdm==4.67.1
+Requires-Dist: beautifulsoup4==4.12.3
+Requires-Dist: lxml==5.3.0
+Requires-Dist: matplotlib==3.9.4
+Provides-Extra: ml
+Requires-Dist: torch==2.5.1; extra == "ml"
+Requires-Dist: torch_geometric==2.6.1; extra == "ml"
+Requires-Dist: sentence-transformers==3.3.1; extra == "ml"
+Requires-Dist: faiss-cpu==1.9.0; extra == "ml"
+Provides-Extra: dev
+Requires-Dist: pytest==8.3.4; extra == "dev"
+Provides-Extra: cloud
+Requires-Dist: modal==1.6.3; extra == "cloud"

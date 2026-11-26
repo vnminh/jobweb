@@ -4,9 +4,13 @@ import os
 from pathlib import Path
 
 BACKEND_DIR = Path(__file__).resolve().parents[1]
-REPO = Path(os.environ.get("JOBUNICORN_REPO", BACKEND_DIR.parents[1] / "jobunicorn")).resolve()
+# jobunicorn code + checkpoints are vendored in jobweb/jobunicorn; its data/ folder comes from the backend Docker image (see README)
+REPO = Path(os.environ.get("JOBUNICORN_REPO", BACKEND_DIR.parent / "jobunicorn")).resolve()
 DATA_ROOT = Path(os.environ.get("JOBUNICORN_DATA", REPO / "data"))
 DB_PATH = Path(os.environ.get("JOBWEB_DB", BACKEND_DIR / "data" / "jobweb.db"))
+# PostgreSQL in Docker (postgresql+psycopg://user:pass@host/db); SQLite file at DB_PATH otherwise
+DATABASE_URL = os.environ.get("DATABASE_URL", f"sqlite:///{DB_PATH}")
+CACHE_DIR = Path(os.environ.get("JOBWEB_CACHE", BACKEND_DIR / "data"))  # encoder cache (title_text_w7.npz)
 POLICY_PATH = Path(os.environ.get("JOBWEB_POLICY", REPO / "reports" / "post_p10_dqn" / "R3_belief_feats_pen08" / "policy.pt"))
 SECRET_KEY = os.environ.get("JOBWEB_SECRET", "dev-secret-change-me")
 TOKEN_HOURS = 12

@@ -1,4 +1,4 @@
-"""Build the demo SQLite database from the JobUNICORN processed data (CareerBuilder 2012, window 7).
+"""Build the demo database (SQLite file, or PostgreSQL when DATABASE_URL is set) from the JobUNICORN processed data (CareerBuilder 2012, window 7).
 
     cd jobweb/backend && python -m scripts.import_dataset
 
@@ -38,25 +38,45 @@ def log(msg):
 
 
 def main() -> None:
-    if DB_PATH.exists():
-        DB_PATH.unlink()
-    for ext in ("-wal", "-shm"):
-        p = Path(str(DB_PATH) + ext)
-        if p.exists():
-            p.unlink()
-    from app.db import Base, engine
-    from app import models  # noqa: F401
+    from sqlalchemy import Boolean, Integer, String
 
+    from app import models  # noqa: F401
+    from app.db import IS_SQLITE, Base, engine
+
+    if IS_SQLITE:
+        for p in (DB_PATH, Path(str(DB_PATH) + "-wal"), Path(str(DB_PATH) + "-shm")):
+            if p.exists():
+                p.unlink()
+    else:
+        Base.metadata.drop_all(engine)
     Base.metadata.create_all(engine)
     con = engine.raw_connection()
     cur = con.cursor()
 
+    def cell(v, typ):
+        if v is None:
+            return None
+        if isinstance(v, pd.Timestamp):
+            return v.to_pydatetime()
+        if isinstance(typ, Boolean):
+            return bool(v)
+        if isinstance(typ, Integer) and isinstance(v, float):
+            return int(v)  # int columns with NaN come out of pandas as float
+        if isinstance(typ, String) and typ.length and isinstance(v, str):
+            return v[:typ.length]  # PostgreSQL enforces VARCHAR(n); SQLite does not
+        return v
+
     def insert(table: str, df: pd.DataFrame):
         df = df.astype(object).where(pd.notna(df), None)
         cols = list(df.columns)
-        cur.executemany(f"INSERT INTO {table} ({','.join(cols)}) VALUES ({','.join('?' * len(cols))})",
-                        [tuple(None if v is None else (v.to_pydatetime() if isinstance(v, pd.Timestamp) else v) for v in r)
-                         for r in df.itertuples(index=False, name=None)])
+        types = [Base.metadata.tables[table].c[c].type for c in cols]
+        rows = (tuple(cell(v, t) for v, t in zip(r, types)) for r in df.itertuples(index=False, name=None))
+        if IS_SQLITE:
+            cur.executemany(f"INSERT INTO {table} ({','.join(cols)}) VALUES ({','.join('?' * len(cols))})", list(rows))
+        else:
+            with cur.copy(f"COPY {table} ({','.join(cols)}) FROM STDIN") as cp:
+                for r in rows:
+                    cp.write_row(r)
         con.commit()
         log(f"{table}: {len(df):,} rows")
 
@@ -175,8 +195,13 @@ def main() -> None:
     insert("applications", pd.DataFrame({"seeker_id": a.user_id.map(seeker_of_user), "job_id": a.canonical_job_id, "window_id": W,
                                          "application_date": a.app_date, "status": "submitted", "source": "dataset",
                                          "dataset_role": a.role.where(a.role.isin(["history", "target"]), None)}))
+    if not IS_SQLITE:  # explicit ids were inserted: move the serial sequences past them
+        for t in Base.metadata.sorted_tables:
+            if "id" in t.c and t.c["id"].primary_key and t.c["id"].autoincrement:
+                cur.execute(f"SELECT setval(pg_get_serial_sequence('{t.name}', 'id'), COALESCE((SELECT MAX(id) FROM {t.name}), 0) + 1, false)")
+        con.commit()
     con.close()
-    log(f"done -> {DB_PATH} ({DB_PATH.stat().st_size / 1e6:.0f} MB)")
+    log(f"done -> {DB_PATH} ({DB_PATH.stat().st_size / 1e6:.0f} MB)" if IS_SQLITE else "done -> PostgreSQL")
 
 
 if __name__ == "__main__":

@@ -1,0 +1,10 @@
+base: p7/full.yaml
+run:
+  n_eval: 300          # dev sessions (W5, CA/FL/TX)
+  n_proc: 3
+  mass_threshold: 0.1
+  ask_budget: 4
+retrieval:
+  n_c_grid: [500, 1000, 2000, 5000]
+sim:
+  p_unknown_skill: 0.0
